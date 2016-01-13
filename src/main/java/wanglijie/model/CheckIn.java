@@ -1,5 +1,7 @@
 package wanglijie.model;
 
+import java.security.Timestamp;
+
 /**
  * Created by $Jason.Zhang on 1/4/16.
  */
@@ -8,6 +10,15 @@ public class CheckIn {
     int customerId;
     int roomId;
     long customerNumber;
+    java.sql.Timestamp updateTime;
+
+    public java.sql.Timestamp getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(java.sql.Timestamp updateTime) {
+        this.updateTime = updateTime;
+    }
 
     public int getId() {
         return id;

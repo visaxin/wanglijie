@@ -23,7 +23,7 @@ public class UserDao {
             queryRunner.update(sql, user.getIdNumber(), user.getUserName(), user.getEmail(),user.getPassword(), user.getGender(), user.getRole(),
                     user.getAge(),user.getId());
         } else {
-            sql = "insert into user(id_number,name,email,password,gender,role,age) values(?,?,?,?,?,?,?)";
+            sql = "insert into user(idNumber,name,email,password,gender,role,age) values(?,?,?,?,?,?,?)";
             queryRunner.update(sql, user.getIdNumber(), user.getUserName(),user.getEmail(), user.getPassword(), user.getGender(), user.getRole(),
                     user.getAge());
         }

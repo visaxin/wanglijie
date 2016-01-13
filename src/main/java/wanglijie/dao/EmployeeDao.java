@@ -23,11 +23,11 @@ public class EmployeeDao {
     public void insertOrUpdate(Employee employee) throws SQLException {
         String sql = "";
         if (select(employee.getId()) != null) {
-            sql = "update employee set id_number=?, name=?,email=?,gender=?,role=?,age=?,salary=? where id = ?";
+            sql = "update employee set idNumber=?, name=?,email=?,gender=?,role=?,age=?,salary=? where id = ?";
             queryRunner.update(sql, employee.getIdNumber(), employee.getName(), employee.getEmail(), employee.getGender(),
                     employee.getRole(), employee.getAge(), employee.getSalary());
         } else {
-            sql = "insert into employee(id_number,name,email,gender,role,age,salary) values(?,?,?,?,?,?,?)";
+            sql = "insert into employee(idNumber,name,email,gender,role,age,salary) values(?,?,?,?,?,?,?)";
             queryRunner.update(sql, employee.getIdNumber(), employee.getName(), employee.getEmail(), employee.getGender(),
                     employee.getRole(), employee.getAge(), employee.getSalary());
         }

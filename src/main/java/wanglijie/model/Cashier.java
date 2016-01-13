@@ -13,6 +13,15 @@ public class Cashier {
     int days;
     Timestamp in_day;
     Timestamp out_day;
+    Timestamp updateTime;
+
+    public Timestamp getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
+    }
 
     public int getId() {
         return id;

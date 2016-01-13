@@ -1,5 +1,7 @@
 package wanglijie.model;
 
+import java.sql.Timestamp;
+
 /**
  * Created by $Jason.Zhang on 1/10/16.
  */
@@ -12,6 +14,27 @@ public class Employee {
     String role;
     int age;
     double salary;
+    Timestamp updateTime;
+
+
+    public Employee(){}
+    public Employee(int idNumber,String name,String email,String gender,String role,int age,double salary){
+        this.idNumber= idNumber;
+        this.name=name;
+        this.gender=gender;
+        this.email=email;
+        this.role=role;
+        this.age=age;
+        this.salary=salary;
+    }
+
+    public Timestamp getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
+    }
 
     public int getId() {
         return id;

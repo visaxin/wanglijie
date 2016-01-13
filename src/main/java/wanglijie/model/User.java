@@ -1,5 +1,7 @@
 package wanglijie.model;
 
+import java.sql.Timestamp;
+
 /**
  * Created by $Jason.Zhang on 12/29/15.
  */
@@ -12,6 +14,7 @@ public class User {
     String gender;
     String role;
     int age;
+    Timestamp updateTime;
 
     public User(){}
 
@@ -23,6 +26,14 @@ public class User {
         this.gender = gender;
         this.role = role;
         this.age = Integer.valueOf(age);
+    }
+
+    public Timestamp getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
     }
 
     public String getEmail() {

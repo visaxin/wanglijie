@@ -24,6 +24,10 @@
         <servlet-name>CashierServlet</servlet-name>
         <servlet-class>wanglijie.servlet.Cashier.CashierServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EmployeeServlet</servlet-name>
+        <servlet-class>wanglijie.servlet.employee.EmployeeServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -44,5 +48,9 @@
     <servlet-mapping>
         <servlet-name>CashierServlet</servlet-name>
         <url-pattern>/cashier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeeServlet</servlet-name>
+        <url-pattern>/employee</url-pattern>
     </servlet-mapping>
 </web-app>

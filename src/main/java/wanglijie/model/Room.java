@@ -1,5 +1,7 @@
 package wanglijie.model;
 
+import java.sql.Timestamp;
+
 /**
  * Created by $Jason.Zhang on 1/4/16.
  */
@@ -9,6 +11,8 @@ public class Room {
     String roomType;
     Double roomPrice;
     String roomStatus; //打扫中 随时入住 已被预定
+    Timestamp updateTime;
+    public Room(){}
 
     public Room(int roomId,String roomType, Double roomPrice, String roomStatus) {
         this.roomId = roomId;
@@ -16,6 +20,14 @@ public class Room {
         this.roomPrice = roomPrice;
         this.roomStatus = roomStatus;
 
+    }
+
+    public Timestamp getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
     }
 
     public int getId() {

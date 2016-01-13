@@ -26,10 +26,10 @@ public class RoomDao {
     public void insertOrUpdate(Room room) throws SQLException {
         String sql = "";
         if (select(room.getId()) != null) {
-            sql = "update room set room_id=?, room_type=?,room_price=?,room_status=? where id = ?";
+            sql = "update room set roomId=?, roomType=?,roomPrice=?,roomStatus=? where id = ?";
             queryRunner.update(sql,room.getRoomId(),room.getRoomType(),room.getRoomPrice(),room.getRoomStatus());
         } else {
-            sql = "insert into room(room_id,room_type,room_price,room_status) values(?,?,?,?)";
+            sql = "insert into room(roomId,roomType,roomPrice,roomStatus) values(?,?,?,?)";
             queryRunner.update(sql, room.getRoomId(),room.getRoomType(),room.getRoomPrice(),room.getRoomStatus());
         }
         System.out.println("Insert Or Update:" + sql);
@@ -49,15 +49,15 @@ public class RoomDao {
     public List<Room>  selectAvaiableRooms(String roomStatus,String roomType,String roomPriceStart,String roomPriceEnd,int page,int limit) throws SQLException {
         List<Object> arr = new ArrayList<Object>();
         ResultSetHandler<List<Room>> result = new BeanListHandler<Room>(Room.class);
-        String sql = "select * from room where room_status=?";
+        String sql = "select * from room where roomStatus=?";
         arr.add(roomStatus);
         if (roomType != null) {
-            sql += " and room_type=?";
+            sql += " and roomType=?";
             arr.add(roomType);
         }
 
         if(roomPriceStart!=null && roomPriceEnd !=null){
-            sql += " and room_price between ? and ?";
+            sql += " and roomPrice between ? and ?";
             arr.add(roomPriceStart);
             arr.add(roomPriceEnd);
         }
@@ -68,41 +68,13 @@ public class RoomDao {
         arr.add(page*limit);
         arr.add(limit);
 
-        return queryRunner.query(sql,result,arr);
+        Object[] params = arr.toArray();
+        return queryRunner.query(sql,result,params);
     }
 
-    public List<Room>  selectAvaiableRooms(String[] roomStatus,String[] roomType,String roomPriceStart,String roomPriceEnd,int page,int limit) throws SQLException {
-        List<Object> arr = new ArrayList<Object>();
-        ResultSetHandler<List<Room>> result = new BeanListHandler<Room>(Room.class);
-        String sql = "select * from room where room_status=?";
-        arr.add(roomStatus);
-        if (roomStatus != null) {
-            for(int i=0;i<roomStatus.length;i++){
-                sql += " or room_status=?";
-                arr.add(roomStatus[i]);
-            }
-        }
-
-        if(roomType!=null){
-            for(int i=0;i<roomType.length;i++){
-                sql += " or room_type=?";
-                arr.add(roomType[i]);
-            }
-        }
-
-        if(roomPriceStart!=null && roomPriceEnd !=null){
-            sql += " and room_price between ? and ?";
-            arr.add(roomPriceStart);
-            arr.add(roomPriceEnd);
-        }
-        if(limit > Constant.MAX_LIMIT){
-            limit = Constant.MAX_LIMIT;
-        }
-        sql+=" limit ?,?";
-        arr.add(page*limit);
-        arr.add(limit);
-
-        return queryRunner.query(sql,result,arr);
+    public Room selectRoomByRoomId(int roomId) throws SQLException {
+        String sql = "select * from room where roomId = ?";
+        return queryRunner.query(sql,roomBeanHandler,roomId);
     }
 
 }

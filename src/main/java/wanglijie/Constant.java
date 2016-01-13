@@ -6,4 +6,6 @@ package wanglijie;
 public class Constant {
 
     public static int MAX_LIMIT = 20;
+
+    public static String NORMAL_SINGLE="普通单人";
 }

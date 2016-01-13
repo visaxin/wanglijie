@@ -23,10 +23,10 @@ public class CheckInDao {
     public void insertOrUpdate(CheckIn checkIn) throws SQLException {
         String sql = "";
         if (select(checkIn.getId()) != null) {
-            sql = "update check_in set customer_id=?, room_id=?,customer_number=? where id = ?";
+            sql = "update check_in set customerId=?, roomId=?,customerNumber=? where id = ?";
             queryRunner.update(sql,checkIn,checkIn.getCustomerId(),checkIn.getRoomId(),checkIn.getCustomerNumber());
         } else {
-            sql = "insert into check_in values(?,?,?)";
+            sql = "insert into check_in(customerId,roomId,customerNumber) values(?,?,?)";
             queryRunner.update(sql, checkIn,checkIn.getCustomerId(),checkIn.getRoomId(),checkIn.getCustomerNumber());
         }
         System.out.println("Insert Or Update:" + sql);
@@ -54,7 +54,7 @@ public class CheckInDao {
     public List<CheckIn> selectCheckedIn(long dateTimeStart, long dateTimeEnd,int page, int limit) throws SQLException {
         List<Object> arr = new ArrayList<Object>();
         ResultSetHandler<List<CheckIn>> result = new BeanListHandler<CheckIn>(CheckIn.class);
-        String sql = "select * from check_in where update_time between ? and ?";
+        String sql = "select * from check_in where updateTime between ? and ?";
         arr.add(TimeUtil.toDateTimeFromUnixTimeStamp(dateTimeStart));
         arr.add(TimeUtil.toDateTimeFromUnixTimeStamp(dateTimeEnd));
 

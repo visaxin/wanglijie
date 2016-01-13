@@ -110,13 +110,13 @@
                               <span class="input-group-addon">
                                                               房间类型:
                                   普通单人
-                                <input type="checkbox" name="roomType" aria-label="...">
+                                <input type="radio" name="roomType" value="普通单人"aria-label="...">
                                   标准双人
-                                <input type="checkbox" name="roomType" aria-label="...">
+                                <input type="radio" name="roomType" value="标准双人" aria-label="...">
                                   豪华大床房
-                                <input type="checkbox" name="roomType" aria-label="...">
+                                <input type="radio" name="roomType" value="豪华大床房" aria-label="...">
                                   总统套房
-                                <input type="checkbox" name="roomType" aria-label="...">
+                                <input type="radio" name="roomType" value="总统套房" aria-label="...">
                               </span>
                         </div><!-- /input-group -->
                         <div class="input-group">
@@ -130,11 +130,11 @@
                               <span class="input-group-addon">
                                                               房间状态:
                                   打扫中
-                                 <input type="checkbox" name="roomStatus" aria-label="...">
+                                 <input type="radio" name="roomStatus" value="打扫中"aria-label="...">
                                   随时入住
-                                <input type="checkbox" name="roomStatus" aria-label="...">
+                                <input type="radio" name="roomStatus" value="随时入住" aria-label="...">
                                   已被预定
-                                <input type="checkbox" name="roomStatus" aria-label="...">
+                                <input type="radio" name="roomStatus" value="已被预定" aria-label="...">
                               </span>
                         </div>
                     </div>
@@ -144,12 +144,21 @@
             <h2 class="sub-header">房间</h2>
 
             <div class="row">
-                <div class="col-xs-6 col-md-1">
-                    <a href="#" class="thumbnail">
-                        <img src="../../assets/img/dashboard/room_icon.ico" alt="...">
-                    </a>
-                    <button class="btn btn-default">入住—收银</button>
-                    <button class="btn btn-default">退房</button>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>房间号码</th>
+                            <th>房间类型</th>
+                            <th>房间价格</th>
+                            <th>房间状态</th>
+                            <th>最后一次更新</th>
+                        </tr>
+                        </thead>
+                        <tbody id="room_list_tbody">
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -415,7 +424,7 @@
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <button class="btn btn-default" disabled>房间状态:</button>
-                                <input type="input" name="roomStatus" value="打扫中" aria-label="...">
+                                <input type="input" name="roomStatus" value="清扫中" aria-label="...">
                             </span>
                         </div>
                     </div>
@@ -435,7 +444,7 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 
-<script src="http://code.highcharts.com/stock/highstock.js"></script>
+<!--<script src="http://code.highcharts.com/stock/highstock.js"></script>-->
 
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 <script src="../../dist/js/bootstrap.min.js"></script>
