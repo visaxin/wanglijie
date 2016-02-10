@@ -38,7 +38,7 @@ $("#form-login").submit(function (event) {
             $("#login-btn").text("Sign in");
             if (data.status == "200" || data.status == "307") {
                 localStorage.setItem("session", data.session);
-                window.location.href = "/jsp/index/dashboard.jsp";
+                window.location.href = "/jsp/dashboard/dashboard.html";
             } else {
                 $(".form-signin-heading").text(data.info);
                 $("#login-btn").text("Sign in");
