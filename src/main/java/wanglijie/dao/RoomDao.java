@@ -13,6 +13,7 @@ import wanglijie.util.DaoUtil;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,9 +45,15 @@ public class RoomDao {
         String sql = "select * from room where id = ?";
         return queryRunner.query(sql,roomBeanHandler,id);
     }
+    public List<Room> allRooms() throws SQLException {
+        List<Object> arr = new ArrayList<Object>();
+        ResultSetHandler<List<Room>> result = new BeanListHandler<Room>(Room.class);
+        String sql = "select * from room";
+        Object[] params = arr.toArray();
+        return queryRunner.query(sql,result,params);
+    }
 
-
-    public List<Room>  selectAvaiableRooms(String roomStatus,String roomType,String roomPriceStart,String roomPriceEnd,int page,int limit) throws SQLException {
+    public List<Room>  selectAvailableRooms(String roomStatus,String roomType,String roomPriceStart,String roomPriceEnd,int page,int limit) throws SQLException {
         List<Object> arr = new ArrayList<Object>();
         ResultSetHandler<List<Room>> result = new BeanListHandler<Room>(Room.class);
         String sql = "select * from room where roomStatus=?";
@@ -67,7 +74,7 @@ public class RoomDao {
         sql+=" limit ?,?";
         arr.add(page*limit);
         arr.add(limit);
-
+        System.out.println("Searching sql: " +sql);
         Object[] params = arr.toArray();
         return queryRunner.query(sql,result,params);
     }

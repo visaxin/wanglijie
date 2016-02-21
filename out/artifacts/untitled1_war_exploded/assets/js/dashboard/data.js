@@ -1,15 +1,15 @@
 /**
  * Created by jason on 12/13/15.
  */
-
-var searchRoomUrl = "http://localhost:8080/room";
-var addRoomUrl = "http://localhost:8080/room";
-var sellPosDataUrl;
-var checkInUrl;
-var addFoodUrl;
-var selectFoodUrl;
+var hostPort = "http://localhost:8080/"
+var searchRoomUrl = hostPort + "room?isSearch=true";
+var addRoomUrl = hostPort+ "room";
+var sellPosDataUrl = hostPort + "possell";
+var checkInUrl = hostPort + "checkin";
+var addFoodUrl = hostPort + "food";
+var selectFoodUrl = hostPort + "food";
 var hrSelectUrl = "http://localhost:8080/employee";
-var hrAddUrl="http://localhost:8080/employee";
+var hrAddUrl = "http://localhost:8080/employee";
 var is_first_room = true;
 
 //var sessionKey = localStorage.sessionKey;
@@ -25,11 +25,11 @@ function roomList(data) {
         $.each(data, function (index, dataObject) {
             var createTr = $("<tr>");
             $.each(dataObject, function (k, v) {
-                if(k!="id"){
+                if (k != "id") {
                     createTr.append("<td>" + v + "</td>");
                 }
             });
-            createTr.appendTo("#"+roomListId);
+            createTr.appendTo("#" + roomListId);
             isFirstRoom = false;
         })
     } else {
@@ -40,7 +40,7 @@ function roomList(data) {
         $.each(data, function (index, dataObject) {
             var createTr = $("<tr>");
             $.each(dataObject, function (k, v) {
-                if(k!="id"){
+                if (k != "id") {
                     createTr.append("<td>" + v + "</td>");
                 }
             });
@@ -50,10 +50,49 @@ function roomList(data) {
         $("#" + roomListId).replaceWith(t_body);
     }
 }
+function showSearchDataTable(res){
 
+
+    if ($.fn.dataTable.isDataTable('#room_list_table')) {
+        var table = $('#room_list_table').DataTable();
+        table.destroy();
+        table = $("#room_list_table").DataTable(
+            {
+                data: res.data,
+                deferRender: true,
+                "bProcessing": true,
+                "bAutoWidth": true,
+                "order": [1, "DESC"],
+                "columns": [
+                    {"data": "roomId"},
+                    {"data": "roomType"},
+                    {"data": "roomPrice"},
+                    {"data": "roomStatus"},
+                    {"data": "updateTime"}
+                ]
+            }
+        )
+    } else {
+        table = $('#room_list_table').DataTable({
+            data: res.data,
+            deferRender: true,
+            "bProcessing": true,
+            "bAutoWidth": true,
+            "order": [1, "DESC"],
+            "columns": [
+                {"data": "roomId"},
+                {"data": "roomType"},
+                {"data": "roomPrice"},
+                {"data": "roomStatus"},
+                {"data": "updateTime"}
+            ]
+        });
+    }
+}
 //search room
 $("#first_form").submit(function (event) {
     event.preventDefault();
+
     $.ajax({
         type: "GET",
         url: searchRoomUrl,
@@ -61,7 +100,9 @@ $("#first_form").submit(function (event) {
         success: function (data) {
             console.log(data);
             $("first_form_result").append("<li class='list-group-item list-group-item-success'>成功!</li>");
-            roomList(data);
+            //roomList(data);
+            showSearchDataTable(data);
+
         }
     })
 });
@@ -69,11 +110,11 @@ $("#first_form").submit(function (event) {
 $("#second_form").submit(function (event) {
     event.preventDefault();
     $.ajax({
-        type: "post",
+        type: "POST",
         url: checkInUrl,
         data: $("#second_form").serialize(),
         statusCode: {
-            401: function () {
+            503: function () {
                 $("second_form").append("<li class='list-group-item list-group-item-success'>增加失败!</li>")
             },
             200: function () {
@@ -86,7 +127,7 @@ $("#second_form").submit(function (event) {
 $("#third_form").submit(function (event) {
     event.preventDefault();
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: addFoodUrl,
         data: $("#third_form").serialize(),
         statusCode: {
@@ -95,29 +136,33 @@ $("#third_form").submit(function (event) {
             },
             200: function () {
                 $("#third_form").append("<li class='list-group-item list-group-item-success'>成功!</li>")
+
+                window.setTimeout(function () {
+                    $("#third_form").children("li:first").remove();
+                }, 5000);
             }
         }
     })
 });
-//add new employee
+//add new employee==> works
 $("#fourth_form").submit(function (event) {
     event.preventDefault();
     $.ajax({
         type: "POST",
         url: hrAddUrl,
         data: $("#fourth_form").serialize(),
-        success: function(data){
+        success: function (data) {
             console.log(data);
             $("#fourth_form").append("<li class='list-group-item list-group-item-success'>成功!</li>")
-            window.setTimeout(function(){
+            window.setTimeout(function () {
                 $("#fourth_form").children("li:first").remove();
-            },5000);
+            }, 5000);
         }
-    }).fail(function(){
+    }).fail(function () {
         $("#fourth_form").append("<li class='list-group-item list-group-item-success'>失败!</li>")
-        window.setTimeout(function(){
+        window.setTimeout(function () {
             $("#fourth_form").children("li:first").remove();
-        },5000);
+        }, 5000);
     })
 });
 $("#fifth_form").submit(function (event) {
@@ -138,37 +183,19 @@ $("#fifth_form").submit(function (event) {
 });
 
 function workerSellData() {
-    var sellDataId = "sell_pos_tbody";
-    $.ajax({
-        type: "GET",
-        dataType: "json",
-        url: sellPosDataUrl,
-        success: function (data) {
-            if (isFirstRoom == true) {
-                $.each(data, function (index, dataObject) {
-                    var createTr = $("<tr>");
-                    $.each(dataObject, function (k, v) {
-                        createTr.append("<td>" + v + "</td>");
-                    });
-                    createTr.appendTo(sellDataId);
-                    isFirstRoom = false;
-                })
-            } else {
-                var t_body = $("<tbody>", {
-                    id: sellDataId
-                });
-
-                $.each(data, function (index, dataObject) {
-                    var createTr = $("<tr>");
-                    $.each(dataObject, function (k, v) {
-                        createTr.append("<td>" + v + "</td>");
-                    });
-                    createTr.appendTo(t_body);
-                });
-
-                $("#" + sellDataId).replaceWith(t_body);
-            }
-        },
+    $('#sell_pos_table').DataTable({
+        "ajax": sellPosDataUrl,
+        deferRender: true,
+        "bProcessing": true,
+        "bAutoWidth": true,
+        "order": [3, "DESC"],
+        "columns": [
+            {"data": "roomNumber"},
+            {"data": "roomPrice"},
+            {"data": "roomStatus"},
+            {"data": "updateTime"},
+            {"data": "realIncome"}
+        ]
     });
 }
 workerSellData();
@@ -252,8 +279,54 @@ $(document).ready(function () {
     //setInterval(workerSellData, 1400);
     //setInterval(workerFoodData, 1800);
     //setInterval(workerHRData, 2200);
-});
+    $('#hr_table').DataTable({
+        "ajax": hrSelectUrl,
+        deferRender: true,
+        "bProcessing": true,
+        "bAutoWidth": true,
+        "order": [1, "DESC"],
+        "columns": [
+            {"data": "idNumber"},
+            {"data": "name"},
+            {"data": "email"},
+            {"data": "gender"},
+            {"data": "role"},
+            {"data": "age"},
+            {"data": "salary"},
+            {"data": "updateTime"}
+        ]
+    });
+    $('#room_list_table').DataTable({
+        "ajax": addRoomUrl,
+        deferRender: true,
+        "bProcessing": true,
+        "bAutoWidth": true,
+        "order": [1, "DESC"],
+        "columns": [
+            {"data": "roomId"},
+            {"data": "roomType"},
+            {"data": "roomPrice"},
+            {"data": "roomStatus"},
+            {"data": "updateTime"}
+        ]
+    });
 
+
+    $("#food_list").DataTable({
+        "ajax": selectFoodUrl,
+        deferRender: true,
+        "bProcessing": true,
+        "bAutoWidth": true,
+        "order": [1, "DESC"],
+        "columns": [
+            {"data": "foodName"},
+            {"data": "foodPrice"},
+            {"data": "foodLeft"},
+            {"data": "realOutput"},
+            {"data": "updateTime"}
+        ]
+    })
+});
 
 
 

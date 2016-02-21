@@ -25,7 +25,7 @@ public class CheckInServlet extends HttpServlet {
         checkIn.setCustomerId(customerId);
         checkIn.setRoomId(roomId);
         checkIn.setCustomerNumber(customerNumber);
-
+        System.out.println("Checking...RoomId"+roomId+"\nCusId"+customerId+"\nCusNum"+customerNumber);
         Gson gson = new Gson();
         try {
             new CheckInServiceImpl().checkIn(checkIn);

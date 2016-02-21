@@ -27,7 +27,7 @@ public class CheckInDao {
             queryRunner.update(sql,checkIn,checkIn.getCustomerId(),checkIn.getRoomId(),checkIn.getCustomerNumber());
         } else {
             sql = "insert into check_in(customerId,roomId,customerNumber) values(?,?,?)";
-            queryRunner.update(sql, checkIn,checkIn.getCustomerId(),checkIn.getRoomId(),checkIn.getCustomerNumber());
+            queryRunner.update(sql, checkIn.getCustomerId(),checkIn.getRoomId(),checkIn.getCustomerNumber());
         }
         System.out.println("Insert Or Update:" + sql);
     }

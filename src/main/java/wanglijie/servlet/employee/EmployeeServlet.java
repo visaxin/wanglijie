@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by $Jason.Zhang on 1/13/16.
@@ -55,12 +58,35 @@ public class EmployeeServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
 
         Gson gson = new Gson();
+        int idNumber = 0;
+        if(request.getParameter("idNumber")!=null){
+            idNumber = Integer.valueOf(request.getParameter("idNumber"));
+        }
+        String name = null;
+        if(request.getParameter("name")!=null){
+            name = request.getParameter("name");
+        }
+        String email = null;
+        if(request.getParameter("email")!=null){
+            email = request.getParameter("email");
+        }
+        String role = null;
+        if(request.getParameter("role")!=null){
+            role = request.getParameter("role");
+        }
 
-        int idNumber = Integer.valueOf(request.getParameter("idNumber"));
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String role = request.getParameter("role");
 
+        EmployeeService employeeService = new EmployeeServiceImpl();
+        try {
+            List<Employee> employee = employeeService.getEmployees(idNumber,name,email,role);
+            Map<String,List<Employee>> res = new HashMap<String, List<Employee>>();
+            res.put("data",employee);
+            response.getWriter().write(gson.toJson(res));
+        } catch (SQLException e) {
+            response.setStatus(503);
+            response.getWriter().write(gson.toJson(new ResultMap().resultJson(503,"查询失败","")));
+            e.printStackTrace();
+        }
 
     }
 }

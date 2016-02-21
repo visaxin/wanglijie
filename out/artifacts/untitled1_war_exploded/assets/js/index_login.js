@@ -9,10 +9,6 @@ if (showRegister == false) {
     $(".row.centered-form").hide();
 }
 
-var failMessage = $("<div>", {
-    class: "alert alert-danger fade in"
-}).append("<strong>Fail!</strong>");
-
 $("#show-register").bind("click", function (event) {
     event.preventDefault();
     if (showRegister == false) {
@@ -35,10 +31,12 @@ $("#form-login").submit(function (event) {
         url: loginUrl,
         data: $("#form-login").serialize(),
         success: function (data) {
+            window.location.href = "http://localhost:8080/jsp/dashboard/dashboard.html";
             $("#login-btn").text("Sign in");
             if (data.status == "200" || data.status == "307") {
-                localStorage.setItem("session", data.session);
-                window.location.href = "/jsp/index/dashboard.jsp";
+                console.log("ok!");
+                localStorage.setItem("session", "new");
+                window.location.href = "http://localhost:8080/jsp/dashboard/dashboard.html";
             } else {
                 $(".form-signin-heading").text(data.info);
                 $("#login-btn").text("Sign in");

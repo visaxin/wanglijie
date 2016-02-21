@@ -18,8 +18,8 @@ public class RoomServiceImpl implements RoomService {
     public List<Room> selectAvaiableRooms(String[] roomStatus, String[] roomType, String roomPriceStart, String roomPriceEnd, int page, int limit) throws SQLException {
         return null;
     }
-    public List<Room> selectAvaiableRooms(String roomStatus, String roomType, String roomPriceStart, String roomPriceEnd, int page, int limit) throws SQLException {
-        return new RoomDao().selectAvaiableRooms(roomStatus,roomType,roomPriceStart,roomPriceEnd,page,limit);
+    public List<Room> selectAvailableRooms(String roomStatus, String roomType, String roomPriceStart, String roomPriceEnd, int page, int limit) throws SQLException {
+        return new RoomDao().selectAvailableRooms(roomStatus,roomType,roomPriceStart,roomPriceEnd,page,limit);
     }
 
     public void insertRoom(Room room) throws SQLException {

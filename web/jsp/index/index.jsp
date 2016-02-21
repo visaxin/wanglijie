@@ -27,6 +27,7 @@
     <!-- Custom styles for this template -->
     <link href="../../assets/css/signin.css" rel="stylesheet">
 
+
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]>
     <script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -159,9 +160,10 @@
 
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../../assets/js/vendor/jquery.min.js"></script>
 <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
-<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<%--<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>--%>
 <script src="../../assets/js/index_login.js"></script>
 </body>
 </html>

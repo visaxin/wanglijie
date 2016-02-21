@@ -28,6 +28,15 @@
         <servlet-name>EmployeeServlet</servlet-name>
         <servlet-class>wanglijie.servlet.employee.EmployeeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PosSellServlet</servlet-name>
+        <servlet-class>wanglijie.servlet.posSell.PosSellServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FoodServlet</servlet-name>
+        <servlet-class>wanglijie.servlet.food.FoodServlet</servlet-class>
+    </servlet>
+
 
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -53,4 +62,13 @@
         <servlet-name>EmployeeServlet</servlet-name>
         <url-pattern>/employee</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PosSellServlet</servlet-name>
+        <url-pattern>/possell</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FoodServlet</servlet-name>
+        <url-pattern>/food</url-pattern>
+    </servlet-mapping>
+
 </web-app>

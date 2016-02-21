@@ -4,7 +4,6 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
-import wanglijie.Constant;
 import wanglijie.model.Employee;
 import wanglijie.util.DaoUtil;
 
@@ -44,63 +43,32 @@ public class EmployeeDao {
         return queryRunner.query(sql, employeeBeanHandler, id);
     }
 
-/*
-    public List<Employee> selectAvaiableEmployees(String employeeStatus, String employeeType, String employeePriceStart, String employeePriceEnd, int page, int limit) throws SQLException {
+    public List<Employee> getEmployees(int idNumber, String name, String email, String role) throws SQLException {
+        String sql = "select * from employee where 1=1";
         List<Object> arr = new ArrayList<Object>();
         ResultSetHandler<List<Employee>> result = new BeanListHandler<Employee>(Employee.class);
-        String sql = "select * from employee where employee_status=?";
-        arr.add(employeeStatus);
-        if (employeeType != null) {
-            sql += " and employee_type=?";
-            arr.add(employeeType);
+
+        if (idNumber!=0){
+            sql += " and idNumber = ?";
+            arr.add(idNumber);
         }
 
-        if (employeePriceStart != null && employeePriceEnd != null) {
-            sql += " and employee_price between ? and ?";
-            arr.add(employeePriceStart);
-            arr.add(employeePriceEnd);
+        if( name !=null){
+            sql += " and name = ?";
+            arr.add(name);
         }
-        if (limit > Constant.MAX_LIMIT) {
-            limit = Constant.MAX_LIMIT;
+        if(email!=null){
+            sql+=" and email =  ?";
+            arr.add(email);
         }
-        sql += " limit ?,?";
-        arr.add(page * limit);
-        arr.add(limit);
 
-        return queryRunner.query(sql, result, arr);
+        if(role !=null){
+            sql += " and role = ?";
+            arr.add(role);
+        }
+
+        Object[] params = arr.toArray();
+        return queryRunner.query(sql,result,params);
+
     }
-
-    public List<Employee> selectAvaiableEmployees(String[] employeeStatus, String[] employeeType, String employeePriceStart, String employeePriceEnd, int page, int limit) throws SQLException {
-        List<Object> arr = new ArrayList<Object>();
-        ResultSetHandler<List<Employee>> result = new BeanListHandler<Employee>(Employee.class);
-        String sql = "select * from employee where employee_status=?";
-        arr.add(employeeStatus);
-        if (employeeStatus != null) {
-            for (int i = 0; i < employeeStatus.length; i++) {
-                sql += " or employee_status=?";
-                arr.add(employeeStatus[i]);
-            }
-        }
-
-        if (employeeType != null) {
-            for (int i = 0; i < employeeType.length; i++) {
-                sql += " or employee_type=?";
-                arr.add(employeeType[i]);
-            }
-        }
-
-        if (employeePriceStart != null && employeePriceEnd != null) {
-            sql += " and employee_price between ? and ?";
-            arr.add(employeePriceStart);
-            arr.add(employeePriceEnd);
-        }
-        if (limit > Constant.MAX_LIMIT) {
-            limit = Constant.MAX_LIMIT;
-        }
-        sql += " limit ?,?";
-        arr.add(page * limit);
-        arr.add(limit);
-
-        return queryRunner.query(sql, result, arr);
-    }*/
 }
